@@ -22,17 +22,36 @@ Projetos consultados para comparação (não foram portados aqui): [uiliannn/VIt
 | `VICTORY_FILL_WORKERS=3` com `VICTORY_CARD_BUFFERS_MIN_MB=1` | caiu em cerca de 2,5 min com 0xC0000409 |
 | `VICTORY_CARD_BUFFERS_MIN_MB=1` | sem ganho claro; faixa de 1,2–1,5 FPS, cerca de 744 ms por quadro |
 
+## Outros testes e o que não funcionou
+
+| Teste | Resultado |
+|---|---|
+| Perfil de console Series S (`--console series-s`) | resolução de apresentação foi 1920x1080, não 720p; tela continuou sem imagem completa |
+| `VICTORY_DISPLAY_MODE=1280x720` | não muda a resolução de renderização; o título apresentou em 3840x2160 |
+| `VICTORY_KEEP_SNAPSHOTS=1` com 256 MB | sem ganho visível; a RAM do sistema chegou a 7 MB livres |
+| Ray tracing (`VICTORY_BVH_BUILDER=1`) | não testado por causa do risco de travar a placa |
+| Patch 0045 do Kelvaroq (espera de observação) | não se aplica sem portar o 0044 antes; deixado de fora |
+| Correção da issue #721 (escrever só bytes alterados) | mais lenta na bancada quando há muitas alterações |
+| Função `differing` alternativa (blocos de 1 MiB) | igual com poucas alterações, mais lenta com muitas |
+
+## Quedas e causas investigadas
+
+- **0xC0000005 em `victory-image-…dll+0x23CF683`:** acesso a endereço nulo dentro do código do título. Apareceu em duas execuções. Sem símbolos, não há nome de função.
+- **0x80000003 em `victory-image-…dll+0x5149aec`:** parada numa cadeia de chamadas do título. Nosso código tem um ponto de parada, mas só dispara em imports inexistentes, e isso não ocorreu. A mensagem de assert do título não aparece no log.
+- **0x887A0005 (dispositivo de GPU removido):** ocorreu logo depois de erros de gravação do DirectStorage (`destination's physical pages could not be written`) e de novos pipelines de shader. Em uma execução, a queda veio cerca de 85 segundos depois dos erros de gravação.
+- A camada de depuração do Direct3D 12 foi instalada, mas nenhuma execução mostrou o comando que falhou.
+
 ## O que ainda não foi resolvido
 
-- O jogo fica perto de 1 FPS na GTX 1660 SUPER.
-- Houve quedas com 0xC0000005 (violação de memória) e 0x887A0005 (dispositivo de GPU removido). A causa não foi identificada: o crash log não traz a pilha e o envio ao Backtrace foi bloqueado.
-- A captura de minidump local (WER LocalDumps) cobre exceções do código do jogo, não falhas no host.
+- O jogo fica perto de 1 FPS na GTX 1660 SUPER, com a cena do mundo montando, mas a imagem completa não aparece.
+- Não há símbolos da imagem do título, então a função que falha não foi identificada.
+- A captura de minidump local cobre exceções do código do jogo, não falhas no host.
 
 ## Próximos passos
 
-1. Capturar um minidump na próxima queda e identificar o módulo.
-2. Medir a comparação na CPU separadamente da espera da GPU.
-3. Testar `VICTORY_FILL_WORKERS=1` sem outras flags, para separar a causa das quedas.
+1. Obter símbolos ou uma captura com a mensagem de depuração do título, para identificar o assert de 0x80000003.
+2. Relacionar a perda de dispositivo com o carregamento de pipelines novos, num teste isolado.
+3. Só depois voltar às medições de desempenho.
 
 ## Crédito
 
