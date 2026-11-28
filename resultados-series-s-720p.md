@@ -71,3 +71,17 @@ Result: no crash and no GPU error during the 10 minutes.
 - Whether the scene stayed in the same cell for the whole measurement (frames were not compared with each other).
 - Real effect of VICTORY_SNAPSHOT_POOL and VICTORY_TEXTURE_BUDGET_MB: not used.
 - Image quality beyond the observed frame.
+
+## Segunda medição (sessão reaberta, 27 a 28/11)
+
+- A sessão anterior parou de gravar log às 00:13; a sessão reaberta voltou a gravar às 01:47, com o mesmo save e o mesmo cache.
+- Última leitura (02:19 local): 2,1 FPS, 470 ms por quadro, 3.609 desenhos por quadro, 424 descartados sem pipeline.
+- Tempo por quadro: 110 ms de cópias no preparo, 18 ms de texturas, 79 ms na GPU e 219 ms de cópia de volta.
+- Processo vivo e sem queda até 02:19. Ainda não é jogável: a cena observada após o aperto de A é uma tela de introdução ou carregamento, não confirmada como mundo.
+
+## Second measurement (reopened session, 27 to 28/11)
+
+- The previous session stopped writing its log at 00:13; the reopened session resumed writing at 01:47, with the same save and cache.
+- Last reading (02:19 local): 2.1 FPS, 470 ms per frame, 3,609 draws per frame, 424 dropped without a pipeline.
+- Frame time: 110 ms of copies in preparation, 18 ms of textures, 79 ms on the GPU and 219 ms of copy-back.
+- Process alive and no crash up to 02:19. Still not playable: the scene seen after pressing A is an intro or loading screen, not confirmed as the world.
