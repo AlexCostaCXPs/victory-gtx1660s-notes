@@ -161,3 +161,47 @@ Notes from a performance and stability investigation of Victory (a runtime that 
 ### Credits
 
 The diagnostics and measurements in this investigation are our own. The environment option ideas and the code base come from Victory and the projects listed above.
+
+---
+
+## Getting started
+
+1. Get your own legitimate copy of the game. This repository does not provide it.
+2. Use Windows 10 or 11 with an NVIDIA card and a recent driver. Keep at least 16 GB of RAM; the upstream fork asks for 32 GB.
+3. Build the runtime from a clean checkout of the base project (see Credits), then run it from the folder that holds your copy of the game, with `run <game_scarlett_master.exe> --execute`.
+4. The first start of a new build restarts by itself once (warm-up). This is expected.
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `run <game_scarlett_master.exe> --execute` | starts the title from your game folder |
+| `run ... --execute --console series-s` | asks the title for the Series S profile (1920x1080 in our tests) |
+| `play` (fork subcommand) | starts with the fork's launcher and settings menu |
+| `victory.exe get-d3d12` | downloads Microsoft's D3D12 runtime, when the fork offers it |
+| `victory.exe get-mfg` | downloads an optional third-party mod (off by default; not recommended) |
+| `cargo test -p victory-shader` | runs the shader translator tests |
+| `cargo test -p victory-gpu` | runs the GPU host tests |
+
+Useful environment variables (all optional): `VICTORY_TEXTURE_PASS_MS=50` (only confirmed gain), `VICTORY_FILL_WORKERS=1`, `VICTORY_CARD_BUFFERS_MB`, `VICTORY_SNAPSHOT_POOL`, `VICTORY_TEXTURE_BUDGET_MB`, `VICTORY_COUNT_VIEWS` (diagnostic only; needs `VICTORY_RAW_VIEWS=0`).
+
+## Windows shader-test validator
+
+The shader translator tests validate the generated DXIL with `dxil.dll` from the Windows SDK (Windows Kits 10, x64). If the DLL is not found, the validation tests are skipped, so install the Windows SDK to run them fully. A test that passes without the validator does not prove the shader is valid.
+
+## Debugging
+
+- **Crash log:** `%LOCALAPPDATA%\victory\data\<title-id>\crashes.log` has the exception code, the faulting address and the stack, with module and offset. Without symbols, names of functions are not available.
+- **Minidumps:** a local dump is written for exceptions in the game's code (Windows Error Reporting, LocalDumps). Host failures may not produce a dump.
+- **Direct3D 12 debug layer:** install "Graphics Tools" (`Add-WindowsCapability -Online -Name 'Tools.Graphics.DirectX~~~~0.0.1.0'`, administrator, then restart). With `VICTORY_D3D12_DEBUG=1` a diagnostics build names the failing command; in our runs it did not.
+- **Debugger:** WinDbg Preview (Microsoft Store) includes `cdb.exe` under its package folder. Note that attaching a debugger changed timing in our runs, so results are not directly comparable.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 (see [LICENSE](LICENSE)), the same license as the base project. Any derived work must keep this license and state its changes.
+
+---
+
+## Português: primeiros passos, comandos, validador, depuração e licença
+
+Para as seções em português, consulte as seções em inglês acima; os comandos e nomes de variáveis são os mesmos nos dois idiomas. A licença é GPL v3 (ver `LICENSE`).
