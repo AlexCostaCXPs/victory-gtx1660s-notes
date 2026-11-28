@@ -2,6 +2,44 @@
 
 [Português](#português) · [English](#english)
 
+## Scope and status
+
+This repository is a **performance investigation** of a Direct3D 12 compatibility layer on NVIDIA GPUs. It is not a build of any game.
+
+- It contains **no game files**: no game executables, no game data, no caches and no game builds. The user supplies their own files, and the layer reads them at run time only.
+- The source code is licensed under **GPL-3.0-or-later** (see [LICENSE](LICENSE)). Some files include third-party code under MIT or LGPL terms; their notices are kept in place.
+
+### Progress table
+
+| Stage | Status | Notes |
+|---|---|---|
+| Preparation (setup, configuration) | Done | Scripts and build instructions are in this repository. |
+| Executable running | Done | The title starts under a Series S profile at 1280x720. |
+| First frame | Done | Frames are presented; the first ones are black. |
+| Main menu | Done | The account selection screen was observed in captures. |
+| In the world | Partial | Over 900 draws per frame were reached in a logged session. Early world frames were black. |
+| Playable | Not verified | No session with input beyond the menu was checked. |
+| Story | Not verified | Not tested. |
+| Graphics | Partial | One world frame (a prison corridor) looked correct. Frames were not compared with each other. |
+| Performance | Measured | About 2 FPS (1.4 to 2.5) in a 10-minute measurement at 1280x720, with 4,400 to 6,200 draws per frame. |
+| Stability | Partial | No crash and no GPU error in the first 10 minutes. Afterwards the game kept rendering, but its log stopped being written, so later GPU errors could not be checked. |
+
+### Commands and settings actually used
+
+- Command: `victory run <game> --execute --console series-s` (diagnostic build with frame capture).
+- Settings in effect: `VICTORY_DISPLAY_MODE=1280x720`, `VICTORY_CAPTURE=<folder>`, `VICTORY_CAPTURE_WORLD=1`, cache and data folders in the user's own directories.
+- Defaults kept: `VICTORY_COUNT_VIEWS` off, `VICTORY_RAW_VIEWS` not set (on), `VICTORY_SNAPSHOT_POOL` (1024), `VICTORY_TEXTURE_BUDGET_MB` (2048 MB), MFG off, no downloads.
+- Set by the script but not read by this code: `VICTORY_TEXTURE_PASS_MS` and `VICTORY_FILL_WORKERS`. They had no effect.
+
+Earlier sessions had GPU driver faults and out-of-memory errors in command lists. Those sessions are not part of the results above.
+
+### Situação em português
+
+Investigação de desempenho de uma camada de compatibilidade Direct3D 12 em GPUs NVIDIA. Não é build de nenhum jogo: não há arquivos, executáveis, dados, caches nem builds de jogo no repositório. O código é GPL-3.0-or-later (ver [LICENSE](LICENSE)); avisos de código de terceiros (MIT e LGPL) foram mantidos.
+
+Resultado medido: Series S em 1280x720, imagem de mundo correta em um quadro (corredor de presídio), cerca de 2 FPS (1,4 a 2,5) em 10 minutos, sem queda nem erro de GPU nesse período. Jogável e história não verificados. Depois dos primeiros 10 minutos, o processo seguiu respondendo, mas o log parou de ser escrito, então erros posteriores não foram verificados.
+
+
 **Para quem quer continuar o trabalho:** veja [CONTRIBUTING.md](CONTRIBUTING.md) para enviar uma configuração testada (há um modelo de issue "Relato de teste").
 
 ---
