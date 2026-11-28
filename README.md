@@ -14,8 +14,8 @@ Notas de uma investigação de desempenho e estabilidade do Victory (runtime que
 
 ### Resumo
 
-- **Resultado final:** o jogo não passou da fase de abertura de forma estável nesta configuração. A cena do mundo carrega, mas a imagem completa não aparece e o jogo cai.
-- **Causa principal observada:** falta de memória da placa. O título pede mais memória de textura do que os 6 GB de VRAM aguentam, e uma operação do driver falha (`0x8007000E`).
+- **Resultado atual:** no perfil Series S em 1280x720, o jogo chegou ao mundo, com imagem boa nesta sessão, e ficou estável por mais de 10 minutos, a cerca de 2 FPS (1,4 a 2,5). Ainda não é jogável: não testamos entradas além do menu, e as primeiras capturas de mundo saíram pretas.
+- **Causa principal observada nas sessões anteriores:** falta de memória da placa. O título pedia mais memória de textura do que os 6 GB de VRAM aguentavam, e uma operação do driver falhava (`0x8007000E`). Com o limite de texturas em 2048 MB e o perfil Series S, essa falha não apareceu nos últimos testes.
 - **Estado atual:** o jogo chegou ao mundo com imagem boa, no perfil Series S em 1280x720, e ficou estável por mais de 10 minutos, a cerca de 2 FPS. Antes, a decisão era parar; essa decisão foi revista, e a medição continua. Os detalhes estão abaixo.
 
 ### Hardware e base de software
@@ -61,7 +61,7 @@ Notas de uma investigação de desempenho e estabilidade do Victory (runtime que
 
 ### Limitações
 
-- O jogo fica em cerca de 1 FPS na GTX 1660 SUPER, com a cena do mundo montando, mas sem imagem completa.
+- No perfil Series S em 1280x720, o jogo fica em cerca de 2 FPS (1,4 a 2,5 em 10 minutos), com 4.400 a 6.200 desenhos por quadro. Ainda não testamos jogabilidade além do menu.
 - Não há símbolos da imagem do título, então a função que falha não foi identificada.
 - A captura de minidump local cobre exceções do código do jogo, não falhas no host.
 - Os números vêm de sessões curtas; não há medições em outra máquina.
@@ -130,8 +130,8 @@ Notes from a performance and stability investigation of Victory (a runtime that 
 
 ### Summary
 
-- **Final result:** the game did not get past the opening stage stably on this setup. The world scene loads, but the full picture never appears and the game crashes.
-- **Main cause observed:** GPU memory shortage. The title asks for more texture memory than 6 GB of VRAM can hold, and a driver operation fails (`0x8007000E`).
+- **Current result:** on the Series S profile at 1280x720, the game reached the world, with a good picture in this session, and stayed stable for more than 10 minutes, at about 2 FPS (1.4 to 2.5). It is not playable yet: no input beyond the menu was tested, and the first world captures came out black.
+- **Main cause observed in earlier sessions:** GPU memory shortage. The title asked for more texture memory than 6 GB of VRAM could hold, and a driver operation failed (`0x8007000E`). With the texture limit at 2048 MB and the Series S profile, this failure did not show up in the latest tests.
 - **Current status:** the game reached the world with a good picture, on the Series S profile at 1280x720, and stayed stable for more than 10 minutes, at about 2 FPS. Earlier the decision was to stop; that decision was revised, and measurement continues. Details are below.
 
 ### Hardware and software base
@@ -177,7 +177,7 @@ Notes from a performance and stability investigation of Victory (a runtime that 
 
 ### Limitations
 
-- The game runs at about 1 FPS on the GTX 1660 SUPER, with the world scene loading but without the full picture.
+- On the Series S profile at 1280x720, the game runs at about 2 FPS (1.4 to 2.5 over 10 minutes), with 4,400 to 6,200 draws per frame. Gameplay beyond the menu has not been tested yet.
 - There are no symbols for the title image, so the failing function was not identified.
 - The local minidump capture covers exceptions in the game's code, not host failures.
 - The numbers come from short sessions; there are no measurements on another machine.
