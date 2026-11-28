@@ -8,7 +8,7 @@ Este repositório guarda notas de testes, não código do jogo. Contribuições 
 2. **Anexe o log e o crash log** da sessão, sem caminhos pessoais e sem arquivos do jogo.
 3. **Não envie** arquivos do jogo, cache de shaders, executáveis nem chaves.
 4. **Mantenha a licença:** o material segue GPL v3 (ver `LICENSE`).
-5. **Use o mesmo formato** da tabela de configurações em `README.md`, para comparar resultados.
+5. **Use o mesmo formato** do arquivo `resultados-series-s-720p.md`, para comparar resultados com a configuração que chegou ao mundo.
 
 ## English
 
@@ -18,4 +18,4 @@ These notes store test results, not game code. Useful contributions:
 2. **Attach the log and the crash log** of the session, without personal paths and without game files.
 3. **Do not send** game files, shader cache, executables or keys.
 4. **Keep the license:** the material is under GPL v3 (see `LICENSE`).
-5. **Use the same format** as the configuration table in `README.md`, so results can be compared.
+5. **Use the same format** as `resultados-series-s-720p.md`, so results can be compared with the configuration that reached the world.
