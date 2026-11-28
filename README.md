@@ -2,6 +2,8 @@
 
 [Português](#português) · [English](#english)
 
+**Para quem quer continuar o trabalho:** veja [CONTRIBUTING.md](CONTRIBUTING.md) para enviar uma configuração testada (há um modelo de issue "Relato de teste").
+
 ---
 
 ## Português
