@@ -84,6 +84,43 @@ Notas de uma investigação de desempenho e estabilidade do Victory (runtime que
 Os diagnósticos e medições desta investigação são próprios. As ideias de opções de ambiente e a base do código vêm do Victory e dos projetos citados acima.
 
 ---
+## Português: primeiros passos, comandos, validador, depuração e licença
+
+### Primeiros passos
+
+1. Tenha a sua própria cópia legítima do jogo. Este repositório não a fornece.
+2. Use Windows 10 ou 11 com uma placa NVIDIA e um driver recente. Tenha pelo menos 16 GB de RAM; o fork de referência pede 32 GB.
+3. Compile o runtime a partir de um checkout limpo do projeto base (ver Crédito) e rode a partir da pasta com a sua cópia do jogo, com `run <game_scarlett_master.exe> --execute`.
+4. O primeiro início de uma build nova reinicia sozinho uma vez (aquecimento). Isso é esperado.
+
+### Comandos
+
+| Comando | O que faz |
+|---|---|
+| `run <game_scarlett_master.exe> --execute` | inicia o título a partir da pasta do seu jogo |
+| `run ... --execute --console series-s` | pede ao título o perfil Series S (1920x1080 nos nossos testes) |
+| `play` (subcomando do fork) | inicia com o lançador do fork e o menu de configurações |
+| `victory.exe get-d3d12` | baixa o runtime D3D12 da Microsoft, quando o fork oferece |
+| `victory.exe get-mfg` | baixa um mod de terceiros opcional (desligado por padrão; não recomendado) |
+| `cargo test -p victory-shader` | roda os testes do tradutor de shaders |
+| `cargo test -p victory-gpu` | roda os testes do host de GPU |
+
+Variáveis de ambiente úteis (todas opcionais): `VICTORY_TEXTURE_PASS_MS=50` (único ganho confirmado), `VICTORY_FILL_WORKERS=1`, `VICTORY_CARD_BUFFERS_MB`, `VICTORY_SNAPSHOT_POOL`, `VICTORY_TEXTURE_BUDGET_MB`, `VICTORY_COUNT_VIEWS` (só diagnóstico; precisa de `VICTORY_RAW_VIEWS=0`).
+
+### Validador de shader no Windows
+
+Os testes do tradutor de shaders validam o DXIL gerado com o `dxil.dll` do Windows SDK (Windows Kits 10, x64). Se a DLL não for encontrada, os testes de validação são pulados; instale o Windows SDK para rodá-los por completo. Um teste que passa sem o validador não prova que o shader é válido.
+
+### Depuração
+
+- **Crash log:** `%LOCALAPPDATA%\victory\data\<title-id>\crashes.log` traz o código da exceção, o endereço da falha e a pilha, com módulo e deslocamento. Sem símbolos, não há nomes de função.
+- **Minidumps:** um dump local é gravado para exceções no código do jogo (Windows Error Reporting, LocalDumps). Falhas no host podem não gerar dump.
+- **Camada de depuração do Direct3D 12:** instale "Ferramentas de Gráficos" (`Add-WindowsCapability -Online -Name 'Tools.Graphics.DirectX~~~~0.0.1.0'`, como administrador, e reinicie). Com `VICTORY_D3D12_DEBUG=1`, um build de diagnóstico nomeia o comando que falha; nas nossas execuções, isso não apareceu.
+- **Depurador:** o WinDbg Preview (Microsoft Store) traz o `cdb.exe` dentro da pasta do pacote. Anexar um depurador mudou o tempo de execução nos nossos testes, então os resultados não são diretamente comparáveis.
+
+### Licença
+
+Este projeto é licenciado sob a GNU General Public License v3.0 (ver [LICENSE](LICENSE)), a mesma licença do projeto base. Qualquer trabalho derivado precisa manter essa licença e declarar as mudanças.
 
 ## English
 
@@ -201,41 +238,3 @@ The shader translator tests validate the generated DXIL with `dxil.dll` from the
 This project is licensed under the GNU General Public License v3.0 (see [LICENSE](LICENSE)), the same license as the base project. Any derived work must keep this license and state its changes.
 
 ---
-
-## Português: primeiros passos, comandos, validador, depuração e licença
-
-### Primeiros passos
-
-1. Tenha a sua própria cópia legítima do jogo. Este repositório não a fornece.
-2. Use Windows 10 ou 11 com uma placa NVIDIA e um driver recente. Tenha pelo menos 16 GB de RAM; o fork de referência pede 32 GB.
-3. Compile o runtime a partir de um checkout limpo do projeto base (ver Crédito) e rode a partir da pasta com a sua cópia do jogo, com `run <game_scarlett_master.exe> --execute`.
-4. O primeiro início de uma build nova reinicia sozinho uma vez (aquecimento). Isso é esperado.
-
-### Comandos
-
-| Comando | O que faz |
-|---|---|
-| `run <game_scarlett_master.exe> --execute` | inicia o título a partir da pasta do seu jogo |
-| `run ... --execute --console series-s` | pede ao título o perfil Series S (1920x1080 nos nossos testes) |
-| `play` (subcomando do fork) | inicia com o lançador do fork e o menu de configurações |
-| `victory.exe get-d3d12` | baixa o runtime D3D12 da Microsoft, quando o fork oferece |
-| `victory.exe get-mfg` | baixa um mod de terceiros opcional (desligado por padrão; não recomendado) |
-| `cargo test -p victory-shader` | roda os testes do tradutor de shaders |
-| `cargo test -p victory-gpu` | roda os testes do host de GPU |
-
-Variáveis de ambiente úteis (todas opcionais): `VICTORY_TEXTURE_PASS_MS=50` (único ganho confirmado), `VICTORY_FILL_WORKERS=1`, `VICTORY_CARD_BUFFERS_MB`, `VICTORY_SNAPSHOT_POOL`, `VICTORY_TEXTURE_BUDGET_MB`, `VICTORY_COUNT_VIEWS` (só diagnóstico; precisa de `VICTORY_RAW_VIEWS=0`).
-
-### Validador de shader no Windows
-
-Os testes do tradutor de shaders validam o DXIL gerado com o `dxil.dll` do Windows SDK (Windows Kits 10, x64). Se a DLL não for encontrada, os testes de validação são pulados; instale o Windows SDK para rodá-los por completo. Um teste que passa sem o validador não prova que o shader é válido.
-
-### Depuração
-
-- **Crash log:** `%LOCALAPPDATA%\victory\data\<title-id>\crashes.log` traz o código da exceção, o endereço da falha e a pilha, com módulo e deslocamento. Sem símbolos, não há nomes de função.
-- **Minidumps:** um dump local é gravado para exceções no código do jogo (Windows Error Reporting, LocalDumps). Falhas no host podem não gerar dump.
-- **Camada de depuração do Direct3D 12:** instale "Ferramentas de Gráficos" (`Add-WindowsCapability -Online -Name 'Tools.Graphics.DirectX~~~~0.0.1.0'`, como administrador, e reinicie). Com `VICTORY_D3D12_DEBUG=1`, um build de diagnóstico nomeia o comando que falha; nas nossas execuções, isso não apareceu.
-- **Depurador:** o WinDbg Preview (Microsoft Store) traz o `cdb.exe` dentro da pasta do pacote. Anexar um depurador mudou o tempo de execução nos nossos testes, então os resultados não são diretamente comparáveis.
-
-### Licença
-
-Este projeto é licenciado sob a GNU General Public License v3.0 (ver [LICENSE](LICENSE)), a mesma licença do projeto base. Qualquer trabalho derivado precisa manter essa licença e declarar as mudanças.
