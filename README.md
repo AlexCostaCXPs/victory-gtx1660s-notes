@@ -16,7 +16,7 @@ Notas de uma investigação de desempenho e estabilidade do Victory (runtime que
 
 - **Resultado final:** o jogo não passou da fase de abertura de forma estável nesta configuração. A cena do mundo carrega, mas a imagem completa não aparece e o jogo cai.
 - **Causa principal observada:** falta de memória da placa. O título pede mais memória de textura do que os 6 GB de VRAM aguentam, e uma operação do driver falha (`0x8007000E`).
-- **Decisão:** parar por aqui nesta configuração. Os motivos estão abaixo.
+- **Estado atual:** o jogo chegou ao mundo com imagem boa, no perfil Series S em 1280x720, e ficou estável por mais de 10 minutos, a cerca de 2 FPS. Antes, a decisão era parar; essa decisão foi revista, e a medição continua. Os detalhes estão abaixo.
 
 ### Hardware e base de software
 
@@ -67,7 +67,7 @@ Notas de uma investigação de desempenho e estabilidade do Victory (runtime que
 - Os números vêm de sessões curtas; não há medições em outra máquina.
 - A tradução do menu F1 para português existe em uma cópia de trabalho e funciona (o menu abre em português). O código dela não foi publicado aqui.
 
-### Por que paramos
+### Por que paramos (decisão anterior, revista)
 
 - A memória do sistema (16 GB) fica abaixo do que o fork pede (32 GB).
 - A VRAM de 6 GB não aguenta as texturas que o título pede, mesmo com os limites de cópia.
@@ -132,7 +132,7 @@ Notes from a performance and stability investigation of Victory (a runtime that 
 
 - **Final result:** the game did not get past the opening stage stably on this setup. The world scene loads, but the full picture never appears and the game crashes.
 - **Main cause observed:** GPU memory shortage. The title asks for more texture memory than 6 GB of VRAM can hold, and a driver operation fails (`0x8007000E`).
-- **Decision:** stop here on this setup. The reasons are below.
+- **Current status:** the game reached the world with a good picture, on the Series S profile at 1280x720, and stayed stable for more than 10 minutes, at about 2 FPS. Earlier the decision was to stop; that decision was revised, and measurement continues. Details are below.
 
 ### Hardware and software base
 
@@ -183,7 +183,7 @@ Notes from a performance and stability investigation of Victory (a runtime that 
 - The numbers come from short sessions; there are no measurements on another machine.
 - A Portuguese translation of the F1 menu exists in a working copy and works (the menu opens in Portuguese). Its code is not published here.
 
-### Why we stopped
+### Why we stopped (earlier decision, revised)
 
 - System RAM (16 GB) is below what the fork asks for (32 GB).
 - 6 GB of VRAM does not hold the textures the title asks for, even with copy limits.
