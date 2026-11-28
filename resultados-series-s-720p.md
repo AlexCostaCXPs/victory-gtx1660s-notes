@@ -85,3 +85,20 @@ Result: no crash and no GPU error during the 10 minutes.
 - Last reading (02:19 local): 2.1 FPS, 470 ms per frame, 3,609 draws per frame, 424 dropped without a pipeline.
 - Frame time: 110 ms of copies in preparation, 18 ms of textures, 79 ms on the GPU and 219 ms of copy-back.
 - Process alive and no crash up to 02:19. Still not playable: the scene seen after pressing A is an intro or loading screen, not confirmed as the world.
+## Terceira medição: sessão longa (5 horas)
+
+- Processo de diagnóstico com contador de descartes por shader, no perfil Series S em 1280x720, 16 GB, sem MFG e sem downloads.
+- Aberto de 03:34 a 08:46 (horário local), cerca de 5 horas sem queda.
+- Registro contínuo do log: nenhuma lacuna maior que 2 minutos; 3.204 leituras de FPS.
+- FPS: média 3,45; mínimo 0 (pontual); máximo 32,5 (em trechos de vídeo ou menu).
+- Erros de GPU ou perda de dispositivo: nenhum no log.
+- A cena de mundo não foi confirmada como jogável; a imagem foi observada em capturas, com cenas de introdução e carregamento misturadas ao longo da sessão.
+
+## Third measurement: long session (5 hours)
+
+- Diagnostic process with the per-shader drop counter, Series S profile at 1280x720, 16 GB, no MFG and no downloads.
+- Open from 03:34 to 08:46 (local time), about 5 hours without a crash.
+- Continuous log: no gap longer than 2 minutes; 3,204 FPS readings.
+- FPS: average 3.45; minimum 0 (a single moment); maximum 32.5 (video or menu stretches).
+- GPU errors or device removal: none in the log.
+- The world scene was not confirmed as playable; captures mix intro and loading scenes throughout the session.
