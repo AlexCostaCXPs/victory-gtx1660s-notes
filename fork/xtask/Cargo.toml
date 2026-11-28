@@ -1,0 +1,17 @@
+# VIctory: this file is part of VIctory, distributed under the GNU General Public License, version 3 or later (GPL-3.0-or-later). See the LICENSE file at the root of the repository.
+[package]
+name = "xtask"
+description = "Repository maintenance: asset-policy enforcement and git hooks."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+walkdir.workspace = true
+
+[lints]
+workspace = true

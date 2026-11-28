@@ -1,0 +1,3 @@
+# VIctory: this file is part of VIctory, distributed under the GNU General Public License, version 3 or later (GPL-3.0-or-later). See the LICENSE file at the root of the repository.
+max_width = 100
+use_field_init_shorthand = true
